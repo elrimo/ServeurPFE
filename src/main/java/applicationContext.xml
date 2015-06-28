@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    
+     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />       
+       
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
+	    <property name="driverClassName" value="org.postgresql.Driver" /> 
+	    <property name="url" value="jdbc:postgresql://localhost:5432/PFEDB" />   
+	    <property name="username" value="postgres" />     
+	    <property name="password" value="rimooo" />   
+    </bean>
+    
+
+
+   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"></property>
+    <property name="mappingResources">
+        <list>
+          <value>com\pfe\localisation\object\Etage.hbm.xml</value>
+          <value>com\pfe\localisation\object\Utilisateur.hbm.xml</value>
+          <value>com\pfe\localisation\object\Indoorspace.hbm.xml</value>
+          <value>com\pfe\localisation\object\Arrete.hbm.xml</value>
+          <value>com\pfe\localisation\object\Batiment.hbm.xml</value>
+          <value>com\pfe\localisation\object\Commentaire.hbm.xml</value>
+          <value>com\pfe\localisation\object\Evaluation.hbm.xml</value>
+          <value>com\pfe\localisation\object\Fingerprints.hbm.xml</value>
+          <value>com\pfe\localisation\object\NoeudNav.hbm.xml</value>
+          <value>com\pfe\localisation\object\Object.hbm.xml</value>
+          <value>com\pfe\localisation\object\Rssi.hbm.xml</value>
+          <value>com\pfe\localisation\object\Pointacces.hbm.xml</value>
+          <value>com\pfe\localisation\object\HistoriqueLocalisation.hbm.xml</value>
+         
+           
+        </list>
+    </property>  
+    <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.spatial.dialect.postgis.PostgisDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+    </property>
+   </bean>
+
+     <!-- Création du bean responsable de la gestion des transactions -->
+    <bean id="transactionManager"  class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+	 <!-- Demande à Spring d'instrumenter les beans qui contiennent l'annotation 
+                @Transactionnal -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>    
+
+
+    <context:annotation-config />
+    <context:component-scan base-package="com.pfe.localisation"/>
+
+    <!-- Application Beans -->
+    
+    
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    <property name="messageConverters">
+      <list>
+        <ref bean="stringHttpMessageConverter"/>
+        <ref bean="marshallingHttpMessageConverter"/>
+      </list>
+    </property>
+</bean>
+
+<bean id="stringHttpMessageConverter" 
+       class="org.springframework.http.converter.StringHttpMessageConverter"/>
+
+<bean id="marshallingHttpMessageConverter" 
+      class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+  <property name="marshaller" ref="castorMarshaller" />
+  <property name="unmarshaller" ref="castorMarshaller" />
+</bean>
+
+<bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller"/>
+     
+</beans>

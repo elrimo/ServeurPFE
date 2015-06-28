@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29 avr. 2014 13:48:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pfe.localisation.object.HistoriqueLocalisation" table="historique_localisation" schema="public">
+        <composite-id name="id" class="com.pfe.localisation.object.HistoriqueLocalisationId">
+            <key-property name="idutilisateur" type="int">
+                <column name="idutilisateur" />
+            </key-property>
+            <key-property name="idfingerprints" type="int">
+                <column name="idfingerprints" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="utilisateur" class="com.pfe.localisation.object.Utilisateur" update="false" insert="false" fetch="select">
+            <column name="idutilisateur" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29 avr. 2014 13:48:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pfe.localisation.object.Object" table="object" schema="public">
+        <id name="objectid" type="big_decimal">
+            <column name="objectid" precision="131089" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="indoorspace" class="com.pfe.localisation.object.Indoorspace" fetch="select">
+            <column name="spaceid" />
+        </many-to-one>
+        <property name="gid" type="int">
+            <column name="gid" not-null="true" />
+        </property>
+        <property name="objtype" type="string">
+            <column name="objtype" length="20" />
+        </property>
+        <property name="geom" type="org.hibernate.spatial.GeometryType">
+            <column name="geom" />
+        </property>
+    </class>
+</hibernate-mapping>

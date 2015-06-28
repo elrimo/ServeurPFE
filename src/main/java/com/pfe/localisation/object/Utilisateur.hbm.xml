@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29 avr. 2014 13:48:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pfe.localisation.object.Utilisateur" table="utilisateur" schema="public">
+        <id name="userid" type="long">
+            <column name="userid" />
+            <generator class="increment" />
+        </id>
+        <property name="nom" type="string">
+            <column name="nom" length="20" not-null="true"  />
+        </property>
+        <property name="prenom" type="string">
+            <column name="prenom" length="20" not-null="true" />
+        </property>
+        <property name="email" type="string" >
+            <column name="email" length="20" not-null="true" unique="true" />
+        </property>
+        
+        <property name="password" type="string">
+            <column name="password" length="20" />
+        </property>
+        <property name="role" type="string">
+            <column name="role" length="20" />
+        </property>
+        
+        <property name="dateinscrit" type="date">
+            <column name="dateinscrit"  />
+        </property>
+        <set name="historiqueLocalisations" table="historique_localisation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idutilisateur" not-null="true" />
+            </key>
+            <one-to-many class="com.pfe.localisation.object.HistoriqueLocalisation" />
+        </set>
+        <set name="commentaires" table="commentaire" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idutilisateur" not-null="true" />
+            </key>
+            <one-to-many class="com.pfe.localisation.object.Commentaire" />
+        </set>
+        <set name="evaluations" table="evaluation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idutilisateur" not-null="true" />
+            </key>
+            <one-to-many class="com.pfe.localisation.object.Evaluation" />
+        </set>
+    </class>
+</hibernate-mapping>

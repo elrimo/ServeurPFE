@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29 avr. 2014 13:48:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pfe.localisation.object.Rssi" table="rssi" schema="public">
+        <composite-id name="id" class="com.pfe.localisation.object.RssiId">
+            <key-property name="idpointacces" type="int">
+                <column name="idpointacces" />
+            </key-property>
+            <key-property name="idfingerprints" type="int">
+                <column name="idfingerprints" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="fingerprints" class="com.pfe.localisation.object.Fingerprints" update="false" insert="false" fetch="select">
+            <column name="idfingerprints" not-null="true" />
+        </many-to-one>
+        <many-to-one name="pointacces" class="com.pfe.localisation.object.Pointacces" update="false" insert="false" fetch="select">
+            <column name="idpointacces" not-null="true" />
+        </many-to-one>
+        <property name="valrssi" type="float">
+            <column name="ForceSignal" precision="8" scale="8" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29 avr. 2014 13:48:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pfe.localisation.object.NoeudNav" table="noeud_nav" schema="public">
+        <id name="noeudid" type="double">
+            <column name="noeudid" precision="17" scale="17" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="indoorspace" class="com.pfe.localisation.object.Indoorspace" fetch="select">
+            <column name="espaceid" />
+        </many-to-one>
+        <property name="geom" type="org.hibernate.spatial.GeometryType">
+            <column name="geom" />
+        </property>
+        <set name="arretesForIddistination" table="arrete" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="iddistination" not-null="true" />
+            </key>
+            <one-to-many class="com.pfe.localisation.object.Arrete" />
+        </set>
+        <set name="arretesForIdsource" table="arrete" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idsource" not-null="true" />
+            </key>
+            <one-to-many class="com.pfe.localisation.object.Arrete" />
+        </set>
+    </class>
+</hibernate-mapping>

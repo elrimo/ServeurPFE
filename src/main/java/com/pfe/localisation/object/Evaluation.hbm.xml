@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29 avr. 2014 13:48:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pfe.localisation.object.Evaluation" table="evaluation" schema="public">
+        <id name="idevaluation" type="int">
+            <column name="idevaluation" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="utilisateur" class="com.pfe.localisation.object.Utilisateur" fetch="select">
+            <column name="idutilisateur" not-null="true" />
+        </many-to-one>
+        <property name="eval" type="int">
+            <column name="eval" not-null="true" />
+        </property>
+        <property name="dateeval" type="date">
+            <column name="dateeval" length="13" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

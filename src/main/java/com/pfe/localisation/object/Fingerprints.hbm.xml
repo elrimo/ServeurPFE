@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29 avr. 2014 13:48:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pfe.localisation.object.Fingerprints" table="fingerprints" schema="public">
+        <id name="idfingerprints" type="int">
+            <column name="idfingerprints" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="indoorspace" class="com.pfe.localisation.object.Indoorspace"   fetch="select">
+            <column name="espaceid" not-null="true" />
+        </many-to-one>
+        <property name="position" type="org.hibernate.spatial.GeometryType">
+            <column name="position" not-null="true" />
+        </property>
+        <set name="rssis" table="rssi" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idfingerprints" not-null="true" />
+            </key>
+            <one-to-many class="com.pfe.localisation.object.Rssi" />
+        </set>
+    </class>
+</hibernate-mapping>
